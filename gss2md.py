@@ -4,6 +4,8 @@ from oauth2client.service_account import ServiceAccountCredentials
 from datetime import datetime
 from dateutil.parser import parse
 
+import math
+
 scope = ['https://www.googleapis.com/auth/spreadsheets','https://www.googleapis.com/auth/drive']
 credentials = ServiceAccountCredentials.from_json_keyfile_name(
     'cred.json', scope)
@@ -21,15 +23,23 @@ for seet in lst_seet:
 
     lst_format = []
     h_last = -1
+    cnt = 0
     for row in list_of_lists:
         ymdhms = parse(row[0])
 
         if 0 != ymdhms.hour - h_last:
             lst_format.append('## {}月{}日 {}時'.format(ymdhms.month, ymdhms.day, ymdhms.hour))
             h_last = ymdhms.hour
+
         name = row[1]
         msg = row[2]
         lst_format.append("{:<10}「{}」".format(name, msg))
+        if 0 < len(lst_format) - 1000: # about
+            lst_out.append(lst_format)
+            lst_format = []
+            h_last = -1
+            d_last = -1
+            cnt = 0
 
     lst_out.append(lst_format)
 
