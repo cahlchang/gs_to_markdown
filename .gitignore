@@ -1,0 +1,21 @@
+# credential
+
+cred.json
+
+# output
+out/*.txt
+
+
+# pip library
+six*
+bin/
+certifi*
+chardet*
+gspread*
+httplib2*
+idna*
+oauth2client*
+pyasn1*
+requests*
+rsa*
+urllib3*
